@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ClassPathResource;
 
+import com.frank.CloudUtils;
+
 @SpringBootApplication
 public class CloudBootApplication implements CommandLineRunner {
 
@@ -22,8 +24,8 @@ public class CloudBootApplication implements CommandLineRunner {
 
 	@Value("${username}")
 	String username;
-	
-	public static String cloudFile; 
+
+	public static String cloudFile;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CloudBootApplication.class, args);
@@ -43,7 +45,7 @@ public class CloudBootApplication implements CommandLineRunner {
 		}
 		String fileResult = sb.toString();
 		cloudFile = fileResult.replace("CLOUD_USERNAME", username).replace("CLOUD_PASSWORD_HASH", result);
-		
+
 		logger.info(cloudFile);
 	}
 

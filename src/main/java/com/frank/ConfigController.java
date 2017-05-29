@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConfigController {
 
 	@RequestMapping("/config")
-	public String get(){
-	    return CloudBootApplication.cloudFile;
+	public String get() {
+		return CloudBootApplication.cloudFile;
 
 	}
 }
