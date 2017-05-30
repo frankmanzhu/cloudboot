@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConfigController {
 
-	@RequestMapping("/config")
+	@RequestMapping("/config/coreos1.yml")
 	public String get() {
 		return CloudBootApplication.cloudFile;
 
