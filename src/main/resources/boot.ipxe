@@ -1,0 +1,6 @@
+#!ipxe
+
+set base-url http://192.168.56.10:11111/iso/1353.7.0
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://192.168.56.10:11111/cloud-config-bootstrap.sh rootfstype=btrfs coreos.autologin
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot
