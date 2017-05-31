@@ -21,53 +21,50 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class CoreOSImageServer extends WebMvcConfigurerAdapter {
 
-private static final Logger log = LoggerFactory.getLogger(CoreOSImageServer.class);
+	private static final Logger log = LoggerFactory.getLogger(CoreOSImageServer.class);
 
-@Value("${coreos.image.folder}")
-private String coreosImageFolder;
+	@Value("${coreos.image.folder}")
+	private String coreosImageFolder;
 
-private static String ipxe;
-private static String bootstrap;
+	private static String ipxe;
+	private static String bootstrap;
 
-static {
-    try {
-        ipxe = new String(FileCopyUtils.copyToByteArray(new ClassPathResource("boot.ipxe").getInputStream()),
-               StandardCharsets.UTF_8);
-        bootstrap = new String(FileCopyUtils.copyToByteArray(new ClassPathResource("cloud-config-bootstrap.sh").getInputStream()),
-                StandardCharsets.UTF_8);
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+	static {
+		try {
+			ipxe = new String(FileCopyUtils.copyToByteArray(new ClassPathResource("boot.ipxe").getInputStream()),
+					StandardCharsets.UTF_8);
+			bootstrap = new String(
+					FileCopyUtils.copyToByteArray(new ClassPathResource("cloud-config-bootstrap.sh").getInputStream()),
+					StandardCharsets.UTF_8);
 
-@Override
-public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    
-    log.info("Bind registry with image folder: " + coreosImageFolder);
-    
-    registry
-      .addResourceHandler("/iso/**")
-      .addResourceLocations(coreosImageFolder);
- }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-@ResponseBody
-@RequestMapping("/boot")
-public String boot(HttpServletRequest request) {
-    log.info("Start to boot");
-    log.info("" + request.getParameterMap());
-    return ipxe;
-    
-}
+		log.info("Bind registry with image folder: " + coreosImageFolder);
 
-@ResponseBody
-@RequestMapping("/cloud-config-bootstrap.sh")
-public String bootstrap(HttpServletRequest request) {
-    log.info("Download bootstrap script");
-    log.info("" + request.getParameterMap());
-    return bootstrap;
-    
-}
+		registry.addResourceHandler("/iso/**").addResourceLocations(coreosImageFolder);
+	}
+
+	@ResponseBody
+	@RequestMapping("/boot")
+	public String boot(HttpServletRequest request) {
+		log.info("Start to boot");
+		log.info("" + request.getParameterMap());
+		return ipxe;
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/cloud-config-bootstrap.sh")
+	public String bootstrap(HttpServletRequest request) {
+		log.info("Download bootstrap script");
+		log.info("" + request.getParameterMap());
+		return bootstrap;
+	}  
 
 }
